@@ -409,7 +409,6 @@ void menu_create_product(list_products *lp)
 
     addProdToGeneralList(lp, produto);
 }
-
 int main()
 {
     client_list *cl = createClient_List(10);
@@ -425,57 +424,32 @@ int main()
             {
             case 1:
                 chosenClient = menu_client_design(cl);
-
-                switch (chosenClient)
-                {
-                case 0:
-                    chosenClient2 = menu_client_choice(0, cl);
-
-                    switch (chosenClient2)
-                    {
-                    case 1:
-                        menu_client_products_add(0, cl, general_list);
-                        break;
-                    
-                    case 2:
-                        remove_product_client_list(0, cl);
-                        break;
-
-                    default:
-                        break;
-                    }
-                    break;
-
-                case 1:
-                    chosenClient2 = menu_client_choice(1, cl);
-
-                    switch (chosenClient2)
-                    {
-                    case 1:
-                        menu_client_products_add(1, cl, general_list);
-                        break;
-
-                    case 2:
-                        remove_product_client_list(1, cl);
-                        break;
-                    
-                    default:
-                        break;
-                    }
-                    break;
                 
-                case 2:
-                    break;
+                if(chosenClient < cl->size_max)
+                {
+                    chosenClient2 = menu_client_choice(chosenClient, cl);
 
-                case 3:
-                    break;
+                    switch (chosenClient2)
+                    {
+                    case 1:
+                        menu_client_products_add(chosenClient, cl,general_list);
+                        break;
+                    
+                    case 2:
+                        remove_product_client_list(chosenClient, cl);
+                        break;
 
-                case 10:
+                    default:
+                        break;
+                    }
+                    break;
+                }
+                else if (chosenClient == 10) 
+                {
                     menu_create_client(cl);
-
                     break;
-
-                default:
+                }
+                else {
                     break;
                 }
                 break;
@@ -504,6 +478,7 @@ int main()
             break;
         } while (chosen != 0 || chosen > 2);
     }
+
     free(general_list);
     free(cl);
 
